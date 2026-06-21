@@ -1,8 +1,11 @@
 import { createRoot, type Root } from "react-dom/client";
 import { App } from "../../src/App";
-import { type AuthState, auth, authStore } from "../../src/auth";
-
-const defaultAuthState: AuthState = { isLogin: false };
+import {
+  type AuthState,
+  auth,
+  authStore,
+  resetAuthStore,
+} from "../../src/auth";
 
 let activeContainer: HTMLDivElement | null = null;
 let activeRoot: Root | null = null;
@@ -12,14 +15,18 @@ const removeActiveContainer = () => {
   activeContainer = null;
 };
 
-export const cleanupRenderedApp = () => {
+export const cleanupRenderedApp = (options?: { preserveStorage?: boolean }) => {
   activeRoot?.unmount();
   activeRoot = null;
   removeActiveContainer();
   document.body.innerHTML = "";
-  localStorage.clear();
+
+  if (!options?.preserveStorage) {
+    localStorage.clear();
+  }
+
   sessionStorage.clear();
-  authStore.set(auth, defaultAuthState);
+  resetAuthStore();
   window.history.replaceState({}, "", "/");
 };
 
@@ -27,16 +34,18 @@ export const resetBrowserTestState = (options?: {
   route?: string;
   authState?: AuthState;
   storedAuthState?: AuthState;
+  preserveStorage?: boolean;
 }) => {
-  cleanupRenderedApp();
+  cleanupRenderedApp({ preserveStorage: options?.preserveStorage });
 
   const route = options?.route ?? "/";
-  const authState = options?.authState ?? defaultAuthState;
-
-  authStore.set(auth, authState);
 
   if (options?.storedAuthState) {
     localStorage.setItem("auth", JSON.stringify(options.storedAuthState));
+  }
+
+  if (options?.authState) {
+    authStore.set(auth, options.authState);
   }
 
   window.history.replaceState({}, "", route);
@@ -46,6 +55,7 @@ export const renderApp = (options?: {
   route?: string;
   authState?: AuthState;
   storedAuthState?: AuthState;
+  preserveStorage?: boolean;
 }) => {
   resetBrowserTestState(options);
 

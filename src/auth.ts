@@ -12,7 +12,14 @@ export const auth = atomWithStorage<AuthState>(
   { getOnInit: true },
 );
 
-export const authStore = createStore();
+export const createAuthStore = () => createStore();
+
+export let authStore = createAuthStore();
+
+export const resetAuthStore = () => {
+  authStore = createAuthStore();
+  return authStore;
+};
 
 export const getAuthState = () => authStore.get(auth);
 
