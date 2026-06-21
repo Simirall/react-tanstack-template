@@ -23,9 +23,8 @@ export const cleanupRenderedApp = (options?: { preserveStorage?: boolean }) => {
 
   if (!options?.preserveStorage) {
     localStorage.clear();
+    sessionStorage.clear();
   }
-
-  sessionStorage.clear();
   resetAuthStore();
   window.history.replaceState({}, "", "/");
 };
