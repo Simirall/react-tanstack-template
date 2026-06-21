@@ -40,6 +40,7 @@ export default defineConfig({
             "tests/browser/**/*.spec.tsx",
           ],
           name: "browser",
+          setupFiles: ["./tests/browser/setup.ts"],
         },
       },
     ],
