@@ -19,10 +19,15 @@
         "organizeImports": "on",
         "useSortedAttributes": "on",
         "useSortedKeys": "on",
-        "useSortedProperties": "off"
+        "useSortedProperties": "on"
       }
     },
     "enabled": false
+  },
+  "javascript": {
+    "assist": {
+      "enabled": true
+    }
   },
   "linter": {
     "enabled": true,
@@ -36,6 +41,12 @@
       },
       "style": {
         "noNonNullAssertion": "info"
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "level": "info",
+          "fix": "safe"
+        }
       }
     }
   }

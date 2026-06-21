@@ -1,6 +1,2 @@
 [tools]
-pnpm = "11.7.0"
-
-[tasks.sync-ai]
-description = "Sync AI instruction files"
-file = "git::ssh://git@github.com/Simirall/ai-files.git//sync.sh?ref=main"
+pnpm = "11.8.0"
