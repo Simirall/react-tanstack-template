@@ -2,7 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { getAuthState } from "../../auth";
-import { AuthStoreProvider, resetAuthState } from "../../test/auth-test-utils";
+import {
+  AuthStoreProvider,
+  resetAuthState,
+} from "../../test-utils/auth-test-utils";
 import { Header } from "./Header";
 
 vi.mock("@tanstack/react-router", () => ({

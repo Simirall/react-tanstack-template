@@ -21,7 +21,7 @@ export default defineConfig({
             "src/**/*.spec.tsx",
           ],
           name: "unit",
-          setupFiles: ["./src/test/setup.ts"],
+          setupFiles: ["./src/test-utils/setup.ts"],
         },
       },
       {
