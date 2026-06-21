@@ -1,19 +1,7 @@
-import babel from "@rolldown/plugin-babel";
-import { tanstackRouter } from "@tanstack/router-plugin/vite";
-import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { appPlugins } from "./vite.plugins";
 
 // https://vite.dev/config/
 export default defineConfig({
-  devtools: {
-    enabled: !!process.env.VITE_DEVTOOLS,
-  },
-  plugins: [
-    tanstackRouter({
-      autoCodeSplitting: true,
-      target: "react",
-    }),
-    react(),
-    babel({ presets: [reactCompilerPreset()] }),
-  ],
+  plugins: appPlugins(),
 });
