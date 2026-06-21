@@ -1,2 +1,5 @@
 [tools]
+actionlint = "1.7.12"
+node = "lts"
+pinact = "4.1.0"
 pnpm = "11.8.0"
