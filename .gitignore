@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Testing
+.vitest-attachments
+__screenshots__
+
 # Editor directories and files
 .idea
 .DS_Store

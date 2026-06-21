@@ -8,7 +8,10 @@ import {
   useAuth,
 } from "./auth";
 
-import { AuthStoreProvider, resetAuthState } from "./test-utils/auth-test-utils";
+import {
+  AuthStoreProvider,
+  resetAuthState,
+} from "./test-utils/auth-test-utils";
 
 describe("認証ストア", () => {
   beforeEach(() => {
