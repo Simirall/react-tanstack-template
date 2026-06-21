@@ -1,0 +1,47 @@
+{
+  "name": "tanstack-template",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "tsc -b && biome check --write ./",
+    "lint:ci": "tsc -b && biome check ./",
+    "test": "vitest --project unit",
+    "test:run": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:browser": "vitest run --project browser",
+    "test:coverage": "vitest run --project unit --coverage",
+    "check:actions": "pinact run -check && actionlint"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "5.101.0",
+    "@tanstack/react-router": "1.170.16",
+    "jotai": "2.20.1",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@babel/core": "8.0.1",
+    "@biomejs/biome": "2.5.0",
+    "@rolldown/plugin-babel": "0.2.3",
+    "@tanstack/router-plugin": "1.168.18",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@types/babel__core": "7.20.5",
+    "@types/node": "26.0.0",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitest/browser-playwright": "4.1.9",
+    "@vitest/coverage-v8": "4.1.9",
+    "babel-plugin-react-compiler": "1.0.0",
+    "happy-dom": "20.10.6",
+    "playwright": "1.61.0",
+    "typescript": "7.0.1-rc",
+    "vite": "8.0.16",
+    "vitest": "4.1.9"
+  }
+}
