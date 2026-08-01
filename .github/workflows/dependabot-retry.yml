@@ -1,0 +1,63 @@
+name: Retry Mature Dependabot Updates
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+  pull-requests: read
+
+jobs:
+  retry-mature-updates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Retry release-age failures after 24 hours
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          cutoff=$(date -u -d '24 hours ago' +%s)
+
+          gh pr list \
+            --repo "$REPOSITORY" \
+            --state open \
+            --app dependabot \
+            --limit 100 \
+            --json number,createdAt,headRefName \
+            --template '{{range .}}{{.number}}{{"\t"}}{{.createdAt}}{{"\t"}}{{.headRefName}}{{"\n"}}{{end}}' |
+          while IFS=$'\t' read -r pr_number created_at head_branch; do
+            created_epoch=$(date -u -d "$created_at" +%s)
+            if (( created_epoch > cutoff )); then
+              continue
+            fi
+
+            run_info=$(gh run list \
+              --repo "$REPOSITORY" \
+              --workflow CI \
+              --branch "$head_branch" \
+              --event pull_request \
+              --status completed \
+              --limit 1 \
+              --json databaseId,conclusion \
+              --template '{{range .}}{{.databaseId}}{{"\t"}}{{.conclusion}}{{"\n"}}{{end}}')
+
+            if [[ -z "$run_info" ]]; then
+              continue
+            fi
+
+            run_id=${run_info%%$'\t'*}
+            conclusion=${run_info#*$'\t'}
+            if [[ "$conclusion" != "failure" ]]; then
+              continue
+            fi
+
+            if gh run view "$run_id" --repo "$REPOSITORY" --log-failed |
+              grep -q 'ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION'; then
+              echo "Retrying CI run $run_id for Dependabot PR #$pr_number"
+              gh run rerun "$run_id" --repo "$REPOSITORY" --failed
+            fi
+          done
