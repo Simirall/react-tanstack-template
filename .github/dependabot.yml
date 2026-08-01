@@ -9,3 +9,6 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    # Match pnpm 11's default minimumReleaseAge of one day (1440 minutes).
+    cooldown:
+      default-days: 1
