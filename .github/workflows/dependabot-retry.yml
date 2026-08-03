@@ -43,7 +43,7 @@ jobs:
               --status completed \
               --limit 1 \
               --json databaseId,conclusion \
-              --template '{{range .}}{{.databaseId}}{{"\t"}}{{.conclusion}}{{"\n"}}{{end}}')
+              --jq '.[] | [.databaseId, .conclusion] | @tsv')
 
             if [[ -z "$run_info" ]]; then
               continue
