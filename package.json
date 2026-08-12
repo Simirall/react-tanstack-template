@@ -38,7 +38,7 @@
     "@vitest/browser-playwright": "4.1.9",
     "@vitest/coverage-v8": "4.1.9",
     "babel-plugin-react-compiler": "1.0.0",
-    "happy-dom": "20.11.1",
+    "happy-dom": "20.11.2",
     "playwright": "1.62.1",
     "typescript": "7.0.2",
     "vite": "8.2.1",
